@@ -1,0 +1,35 @@
+﻿@model SurveySystem.Models.Department
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <form class="px-2" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);" asp-action="Create">
+            <h3>Create New Department</h3>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="my-2 form-group">
+                <div class="row">
+                    <div class="col-3">
+                <label asp-for="Name" class="control-label"></label>
+                    </div>
+                    <div class="col-9">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+                </div>
+            </div>
+            <div class="row justify-content-center form-group">
+                <input type="submit" value="Create" class=" col-2 btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SurveySystem.Models.TblKPI>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class=" container pb-1 px-2" style="background-color:white">
+    <div class="mt-4" style="background-color:rgb(239,239,239);height:50px;text-align:center">
+        <h2 style="color:rgb(26,51,67)">Key Performance Indicator</h2>
+        <hr style="color:yellow;height:3px" />
+    </div>
+    <div class="m-3 text-center  ">
+        <p class=" mx-2" style="display:inline ">Department Num</p>
+
+        <input id="deptid" onkeydown="handleKeyPress(event,this.value)" type="text" />
+    </div>
+    <div>
+        <a asp-action="Create" asp-controller="TblKPI"> <button onclick="goto()" type="button" class="btn btn-secondary btn-sm"><i class="fa-solid fa-circle-plus mx-2"></i>Add New Row</button></a>
+    </div>
+    <div>
+        <partial name="_KPIList" model="Model"></partial>
+
+    </div>
+    
+    <hr style="color:yellow;height:3px" />
+    <div class="row justify-content-center " >
+        
+        <a asp-action="Create" asp-controller="Department" class="col-2"><button type="button" class="btn btn-primary px-4 btn-sm">New</button></a>
+        <div onclick="confirmDelete()" class="col-2"><button type="button" class="btn btn-primary px-4  btn-sm">Delete</button></div>
+        <div  class="col-2"><button type="button" class="btn btn-primary px-4  btn-sm">Save</button></div>
+        
+
+
+    </div>
+
+
+</div>
+<script>
+    
+    function handleKeyPress(event, text) {
+        // Check if the pressed key is Enter (keyCode 13)
+        if (event.keyCode === 13) {
+            // Call your function or perform your action here
+            console.log(text);
+            
+
+            $.ajax({
+                url: "/TblKPI/GetByDeptId?deptid=" + text,
+                success: function (result) {
+                    // console.log(result);
+                    document.getElementById("bla").innerHTML = result;
+
+                }
+            });
+        }
+    }
+    function confirmDelete() {
+        var dept = document.getElementById("deptid").value;
+        console.log(dept)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this data!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Perform your delete action here, like an AJAX request or form submission
+                
+
+                window.location.href = '/Department/Delete/'+dept;
+            }
+        });
+    }
+</script>
